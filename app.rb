@@ -11,7 +11,7 @@ user = ''
 
 use Rack::Auth::Basic, 'Restricted Area' do |username, password|
   database.check_user(username, password)
-  user = username
+  user = database.get_user(username)
 end
 
 get '/' do
@@ -21,12 +21,23 @@ get '/' do
 end
 
 get '/admin' do
+  @logged_user = user
   @users = database.get_users
   slim :admin
 end
 
 post '/admin/create' do
-  database.create_user(params['username'], params['password'])
+  database.create_user(params['username'], params['password'], params['admin'])
+  redirect '/admin'
+end
+
+post '/admin/make_admin/:username' do
+  database.update_user(params['username'], true)
+  redirect '/admin'
+end
+
+post '/admin/make_user/:username' do
+  database.update_user(params['username'], false)
   redirect '/admin'
 end
 
@@ -77,5 +88,6 @@ post '/delete/:id' do
 end
 
 get '/confirmation' do
+  @logged_user = user
   slim :confirmation
 end

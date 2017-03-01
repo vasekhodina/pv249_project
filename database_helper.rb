@@ -116,9 +116,9 @@ class DatabaseHelper
     end
   end
 
-  def admin?(username)
+  def get_user(username)
     row = @database[:users].where(:name => username).all
-    return row[0][:admin]
+    return row[0]
   end
 
   def create_user(username, password, admin)

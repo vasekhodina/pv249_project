@@ -6,22 +6,38 @@ html
     h4 Create User
 
     form action='/admin/create' method='post'
-      | username: 
+      b Username: 
       input type='textbox' name='username'
-      | password: 
+      br
+      b Password: 
       input type='textbox' name='password'
-      input type='submit' value='Add user'
+      br
+      input type='checkbox' name='admin' value='true'
+        b Administrator
+      br
+        input type='submit' value='Add user'
     h3 User list
 
     - if @users.any?
     table.table
       tr
         th Username
+        th Role
         th Delete?
       - for user in @users
         tr
           td.username = user[:name]
+          - if user[:admin]
+            td Admin
+          - else
+            td User
           td
+            - if user[:admin]
+              form action='/admin/make_admin/#{user[:name]}' method='post'
+                input type='button' value='Make Administrator' name='Make Admin' alt='Make Admin'
+            - else
+              form action='/admin/make_user/#{user[:name]}' method='post'
+                input type='button' value='Make User' name='Make User' alt='Make User'
             form action='/admin/delete/#{user[:name]}' method='post'
               input type='hidden' name='_METHOD' value='DELETE'
               input type='image' value='Delete' name='Delete' alt='Delete' src='Button-Delete-icon.png'

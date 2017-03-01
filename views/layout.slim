@@ -16,7 +16,7 @@ html
             a href='/positive' Incoming transactions
           li
             a href='/negative' Outgoing transactions
-          - if @logged_user == 'admin'
+          - if @logged_user[:admin]
             li
               a href='/admin' Admin
       == yield
