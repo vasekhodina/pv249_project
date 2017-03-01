@@ -1,0 +1,31 @@
+doctype html
+html
+  head 
+
+  body
+    h4 Create User
+
+    form action='/admin/create' method='post'
+      | username: 
+      input type='textbox' name='username'
+      | password: 
+      input type='textbox' name='password'
+      input type='submit' value='Add user'
+    h3 User list
+
+    - if @users.any?
+    table.table
+      tr
+        th Username
+        th Delete?
+      - for user in @users
+        tr
+          td.username = user[:name]
+          td
+            form action='/admin/delete/#{user[:name]}' method='post'
+              input type='hidden' name='_METHOD' value='DELETE'
+              input type='image' value='Delete' name='Delete' alt='Delete' src='Button-Delete-icon.png'
+
+  br
+  div#footer
+    p Copyleft, All rites reversed, Václav Hodina 2017

@@ -1,0 +1,51 @@
+doctype html
+html
+  head 
+
+  body
+    h3 Transactions
+
+    - if @transactions.any?
+    table.table
+      tr
+        th ID
+        th Order ID
+        th Date
+        th Amount
+        th Partner account
+        th Partner Bank ID
+        th Constant symbol
+        th Variable symbol
+        th Specific symbol
+        th Invoice uploaded?
+        th Actions
+      - for trn in @transactions
+        tr
+          td.id = trn[:id]
+          td.order_id = trn[:order_id]
+          td.date = trn[:date]
+          td.Amount = trn[:amount]
+          td.recv_account = trn[:recv_account]
+          td.recv_bank_num = trn[:recv_bank_num]
+          td.c_symbol = trn[:c_symbol]
+          td.v_symbol = trn[:v_symbol]
+          td.s_symbol = trn[:s_symbol]
+          - if trn[:amount] < 0
+            - if !trn[:processed]
+              td No
+              td 
+                form action='/upload/#{trn[:id]}' method='post' enctype='multipart/form-data'
+                  input type='file' name='file' 
+                  input type='submit' value='Upload'
+            - else
+              td Yes
+              td
+                a href='/download/#{trn[:id]}' 
+                  img alt='Download' src='Button-Download-icon.png' 
+                form action='/delete/#{trn[:id]}' method='post'
+                  input type='hidden' name='_METHOD' value='DELETE'
+                  input type='image' value='Delete' name='Delete' alt='Delete' src='Button-Delete-icon.png'
+
+  br
+  footer
+    p Copyleft, All rites reversed, Václav Hodina 2017

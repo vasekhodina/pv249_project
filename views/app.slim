@@ -1,0 +1,36 @@
+doctype html
+html
+  head 
+
+  body
+    h3 Dashboard
+  - if @account
+    table.table
+      tr
+        th Login name: 
+        td = @logged_user
+      tr
+        th Account numer: 
+        td = @account[0][:id]
+      tr
+        th Currency:
+        td = @account[0][:currency]
+      tr
+        th Date of last update:
+        td = @account[0][:update]
+      tr
+        th Opening balance:
+        td = @account[0][:openingBalance]
+      tr
+        th Current balance:
+        td = @account[0][:closingBalance]
+      tr
+        th Total sum of positive transactions:
+        td = @account[0][:sumPositive]
+      tr
+        th Total sum of negative transactions:
+        td = @account[0][:sumNegative]
+
+  br
+  div#footer
+    p Copyleft, All rites reversed, Václav Hodina 2017
