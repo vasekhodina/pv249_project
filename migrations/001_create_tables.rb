@@ -1,3 +1,9 @@
+##
+# Script for creating tables in a database
+# Creates 3 tables,
+# first for storing account information
+# second for storing users
+# third for storing transactions
 Sequel.migration do
   up do
     create_table(:transactions) do
