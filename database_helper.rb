@@ -82,7 +82,6 @@ class DatabaseHelper
     end
     if date
       parse_account_info(account_json['accountStatement']['info'])
-    # else update only closing balance, date and sums in account
     end
   end
 
