@@ -19,10 +19,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# Example of settings for fio invoice reminder app 
+# Example of settings for fio invoice reminder app
 # every 1.day, :at => '6:30 am' do
-#     runner "Reporter.send_mail_report"
+#   rake "send_report"
 # end
-every 10.minutes do
-    rake 'send_report' 
+every 1.day, :at => '6:30 am' do
+  rake "get_data_and_send_report"
 end
