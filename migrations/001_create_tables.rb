@@ -7,8 +7,8 @@
 Sequel.migration do
   up do
     create_table(:transactions) do
-      Integer :id, :primary_key => true
-      String :order_id                                                                                                                                                                                                                      
+      Integer :id, primary_key: true
+      String :order_id
       Date   :date
       Float  :amount
       String :recv_account
@@ -28,7 +28,7 @@ Sequel.migration do
     end
 
     create_table(:account) do
-      Integer :id, :primary_key => true
+      Integer :id, primary_key: true
       String  :currency
       Date    :update
       Integer :openingBalance
