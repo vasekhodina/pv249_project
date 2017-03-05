@@ -24,7 +24,7 @@ end
 # Show dashboard page
 get '/' do
   @logged_user = user
-  @account = database.get_account_info()
+  @account = database.account_info()
   slim :app
 end
 
@@ -32,7 +32,7 @@ end
 # Show administration page, where the admin sees the list of admins and users
 get '/admin' do
   @logged_user = user
-  @users = database.get_users
+  @users = database.users
   slim :admin
 end
 

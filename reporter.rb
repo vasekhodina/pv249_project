@@ -17,7 +17,7 @@ class Reporter
   # Generates a report in form of a file.
   # Stores it in a specified filepath.
   def generate_report(filepath)
-    transactions = @db.get_unprocessed_trns
+    transactions = @db.unprocessed_trns
     file = File.open(filepath, 'w')
     file.puts 'Order_id    Date        Amount'
     transactions.each do |transaction|

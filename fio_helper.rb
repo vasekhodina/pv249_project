@@ -14,11 +14,11 @@ module FioHelper
     # If since is not nil, sets the date from which the transactions should be
     # downloaded.
     # If since arg. is nil, then downloads transactions since the last download
-    def get_transactions(since)
+    def get_account_statement(since)
       get_trn_url = 'https://www.fio.cz/ib_api/rest/last/#token#/transactions.json'
       fio_set_day(since) if since
       response = Typhoeus::Request.new(get_trn_url.sub!('#token#', TOKEN)).run.response_body
-      JSON.parse(response)
+      JSON.parse(response)['accountStatement']
     end
 
     ##
