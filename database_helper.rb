@@ -97,7 +97,7 @@ class DatabaseHelper
 
   ##
   # Downloads new current JSON from Fio and updates the database.
-  # Creating all the transactions and updating account data. 
+  # Creating all the transactions and updating account data.
   def refresh(date)
     account_statement = FioHelper.get_account_statement(date)
     account_statement['transactionList']['transaction'].each do |trn|
@@ -133,7 +133,7 @@ class DatabaseHelper
   end
 
   ##
-  # Handles deleting of filepath in database. Also sets the processed 
+  # Handles deleting of filepath in database. Also sets the processed
   # attribute to false.
   def delete_invoice(trn_id)
     @database[:transactions].where(id: trn_id).update(invoice: nil)

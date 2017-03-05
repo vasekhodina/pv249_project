@@ -24,7 +24,7 @@ end
 # Show dashboard page
 get '/' do
   @logged_user = user
-  @account = database.account_info()
+  @account = database.account_info
   slim :app
 end
 
@@ -51,7 +51,8 @@ post '/admin/make_admin/:username' do
 end
 
 ##
-# Past method called to change admin account to user account, ie. lose admin access
+# Past method called to change admin account to user account, ie. lose
+# admin access
 post '/admin/make_user/:username' do
   database.update_user(params['username'], false)
   redirect '/admin'
@@ -65,16 +66,16 @@ post '/admin/delete/:username' do
 end
 
 ##
-# Route to page with transactions depending on the variable, it can show all, negative
-# or positive transactions
+# Route to page with transactions depending on the variable, it can show all,
+# negative or positive transactions
 get '/:filter' do
   @logged_user = user
   if params['filter'] == 'all'
-    @transactions = database.all_trns()
+    @transactions = database.all_trns
   elsif params['filter'] == 'positive'
-    @transactions = database.positive_trns()
+    @transactions = database.positive_trns
   elsif params['filter'] == 'negative'
-    @transactions = database.negative_trns()
+    @transactions = database.negative_trns
   else
     redirect '/'
   end
@@ -82,7 +83,8 @@ get '/:filter' do
 end
 
 ##
-# Post route for uploading a file with invoice, or any other information to transaction
+# Post route for uploading a file with invoice, or any other information to
+# transaction
 post '/upload/:id' do
   if params[:file]
     @filename = params[:file][:filename]
@@ -93,7 +95,7 @@ post '/upload/:id' do
     end
 
     database.upload_invoice(params['id'],
-                                  "./public/uploads/#{@filename}")
+                            "./public/uploads/#{@filename}")
   end
   slim :confirmation
 end
@@ -102,7 +104,7 @@ end
 # Get method for downloading previously uploaded files
 get '/download/:id' do
   file = database.get_filepath(params['id'])
-  send_file(file, :disposition => 'attachment')
+  send_file(file, disposition: 'attachment')
 end
 
 ##

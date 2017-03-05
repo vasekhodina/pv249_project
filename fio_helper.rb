@@ -17,8 +17,9 @@ module FioHelper
     def get_account_statement(since)
       get_trn_url = 'https://www.fio.cz/ib_api/rest/last/#token#/transactions.json'
       fio_set_day(since) if since
-      response = Typhoeus::Request.new(get_trn_url.sub!('#token#', TOKEN)).run.response_body
-      JSON.parse(response)['accountStatement']
+      response = Typhoeus::Request.new(get_trn_url.sub!('#token#', TOKEN))
+      json = response.run.response_body
+      JSON.parse(json)['accountStatement']
     end
 
     ##

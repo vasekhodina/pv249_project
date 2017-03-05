@@ -23,6 +23,6 @@
 # every 1.day, :at => '6:30 am' do
 #   rake "send_report"
 # end
-every 1.day, :at => '6:30 am' do
-  rake "get_data_and_send_report"
+every 1.day, at: '6:30 am' do
+  rake 'get_data_and_send_report'
 end
