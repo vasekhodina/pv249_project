@@ -12,3 +12,4 @@ gem 'json'
 gem 'gmail'
 gem 'whenever', require: false
 gem 'dotenv'
+gem 'rdoc'
