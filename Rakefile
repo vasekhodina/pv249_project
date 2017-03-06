@@ -1,3 +1,11 @@
+require 'rdoc/task'
+
+RDoc::Task.new do |rdoc|
+  rdoc.main = 'README.rdoc'
+  rdoc.rdoc_files.include('README.rdoc', './*')
+  rdoc.rdoc_dir = 'doc/'
+end
+
 task :send_report do
   require './reporter'
   reporter = Reporter.new
