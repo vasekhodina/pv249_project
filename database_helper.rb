@@ -57,6 +57,13 @@ class DatabaseHelper
                    sumNegative: sum_negative_transactions)
   end
 
+  def update_account_info(account)
+    @database[:account].insert(update: Date.today,
+                               closingBalance: account['closingBalance'],
+                               sumPositive: sum_positive_transactions,
+                               sumNegative: sum_negative_transactions)
+  end
+
   ##
   # Summing all transactions from the database that have
   # amount of 0 or more
@@ -107,7 +114,9 @@ class DatabaseHelper
         create_trn(trn, true)
       end
     end
-    parse_account_info(account_json['accountStatement']['info']) if date
+    if date parse_account_info(account_statement['info'])
+    else update_account_info(account_statement['info'])
+    end
   end
 
   ##
@@ -126,10 +135,10 @@ class DatabaseHelper
   ##
   # Return the filepath of uploaded file from DB for the specified transaction.
   def get_filepath(trn_id)
-    row = @database[:transactions].where(id: trn_id).all
+    @database[:transactions].where(id: trn_id).all[0][:invoice]
     # Row is an array, so we need to take the first (and only member)
     # and then take invoice path from there
-    row[0][:invoice]
+    # row[0][:invoice]
   end
 
   ##
