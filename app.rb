@@ -45,16 +45,18 @@ end
 
 ##
 # Post method called to change user account into admin account
-post '/admin/make_admin/:username' do
-  database.update_user(params['username'], true)
+post '/admin/make_admin/:name' do
+  puts params['name']
+  database.update_user(params['name'], true)
   redirect '/admin'
 end
 
 ##
 # Past method called to change admin account to user account, ie. lose
 # admin access
-post '/admin/make_user/:username' do
-  database.update_user(params['username'], false)
+post '/admin/make_user/:name' do
+  puts params['name']
+  database.update_user(params['name'], false)
   redirect '/admin'
 end
 
@@ -86,6 +88,7 @@ end
 # Post route for uploading a file with invoice, or any other information to
 # transaction
 post '/upload/:id' do
+  @logged_user = user
   if params[:file]
     @filename = params[:file][:filename]
     file = params[:file][:tempfile]
@@ -110,6 +113,7 @@ end
 ##
 # Method for deleting previously uploaded file
 post '/delete/:id' do
+  @logged_user = user
   file = database.get_filepath(params['id'])
   File.delete(file)
   database.delete_invoice(params['id'])

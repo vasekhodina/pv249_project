@@ -22,14 +22,14 @@ class DatabaseHelper
   def create_trn(transaction, positive)
     dataset = @database[:transactions]
     dataset.insert(id: transaction['column22']['value'],
-                   order_id: assign_safely(order_id, 'column17'),
+                   order_id: assign_safely(transaction, 'column17'),
                    date: Date.parse(transaction['column0']['value']),
                    amount: transaction['column1']['value'],
-                   recv_account: assign_safely(recv_account, 'column2'),
-                   recv_bank_num: assign_safely(recv_bank_num, 'column3'),
-                   c_symbol: assign_safely(c_symbol, 'column4'),
-                   v_symbol: assign_safely(v_symbol, 'column5'),
-                   s_symbol: assign_safely(s_symbol, 'column6'),
+                   recv_account: assign_safely(transaction, 'column2'),
+                   recv_bank_num: assign_safely(transaction, 'column3'),
+                   c_symbol: assign_safely(transaction, 'column4'),
+                   v_symbol: assign_safely(transaction, 'column5'),
+                   s_symbol: assign_safely(transaction, 'column6'),
                    invoice: nil,
                    processed: positive)
   end
@@ -58,7 +58,8 @@ class DatabaseHelper
   end
 
   def update_account_info(account)
-    @database[:account].insert(update: Date.today,
+    @database[:account].where(accountId: account['accountId'])
+                       .update(update: Date.today,
                                closingBalance: account['closingBalance'],
                                sumPositive: sum_positive_transactions,
                                sumNegative: sum_negative_transactions)
@@ -114,8 +115,10 @@ class DatabaseHelper
         create_trn(trn, true)
       end
     end
-    if date parse_account_info(account_statement['info'])
-    else update_account_info(account_statement['info'])
+    if date 
+      parse_account_info(account_statement['info'])
+    else 
+      update_account_info(account_statement['info'])
     end
   end
 
@@ -166,6 +169,10 @@ class DatabaseHelper
   # Creates a new user DB entry.
   def create_user(username, password, admin)
     @database[:users].insert(name: username, password: password, admin: admin)
+  end
+
+  def update_user(username, admin)
+    @database[:users].where(name: username).update(admin: admin)
   end
 
   ##

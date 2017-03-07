@@ -31,8 +31,8 @@ Sequel.migration do
       Integer :id, primary_key: true
       String  :currency
       Date    :update
-      Integer :openingBalance
-      Integer :closingBalance
+      Float   :openingBalance
+      Float   :closingBalance
       Float   :sumPositive
       Float   :sumNegative
     end

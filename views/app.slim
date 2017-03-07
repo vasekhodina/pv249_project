@@ -8,7 +8,7 @@ html
     table.table
       tr
         th Login name: 
-        td = @logged_user
+        td = @logged_user[0][:name]
       tr
         th Account numer: 
         td = @account[0][:id]

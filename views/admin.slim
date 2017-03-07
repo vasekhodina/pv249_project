@@ -23,24 +23,25 @@ html
       tr
         th Username
         th Role
-        th Delete?
+        th Actions
       - for user in @users
-        tr
-          td.username = user[:name]
-          - if user[:admin]
-            td Admin
-          - else
-            td User
-          td
+        - if user[:name] != @logged_user[0][:name]
+          tr
+            td.username = user[:name]
             - if user[:admin]
-              form action='/admin/make_admin/#{user[:name]}' method='post'
-                input type='button' value='Make Administrator' name='Make Admin' alt='Make Admin'
+              td Admin
             - else
-              form action='/admin/make_user/#{user[:name]}' method='post'
-                input type='button' value='Make User' name='Make User' alt='Make User'
-            form action='/admin/delete/#{user[:name]}' method='post'
-              input type='hidden' name='_METHOD' value='DELETE'
-              input type='image' value='Delete' name='Delete' alt='Delete' src='Button-Delete-icon.png'
+              td User
+            td
+              - if user[:admin]
+                form action='/admin/make_user/#{user[:name]}' method='post'
+                  input type='submit' value='Make User' name='Make User' alt='Make User'
+              - else
+                form action='/admin/make_admin/#{user[:name]}' method='post'
+                  input type='submit' value='Make Administrator' name='Make Admin' alt='Make Admin'
+              form action='/admin/delete/#{user[:name]}' method='post'
+                input type='hidden' name='_METHOD' value='DELETE'
+                input type='submit' value='Delete' name='Delete' alt='Delete'
 
   br
   div#footer
